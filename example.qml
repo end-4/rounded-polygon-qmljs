@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Window
 import "src/corner-rounding.js" as CornerRounding
 import "src/rounded-polygon.js" as RoundedPolygon
+import "src/material-shapes.js" as MaterialShapes
 import "src/morph.js" as Morph
 
 Window {
@@ -20,16 +21,14 @@ Window {
     property double radius: 50
 
     property var morph: {
-        const rectangle = RoundedPolygon.RoundedPolygon.fromNumVertices(
-            5, root.radius, root.width / 2, root.height / 2, 
-            new CornerRounding.CornerRounding(root.radius / 3)
-        )
-        const star = RoundedPolygon.RoundedPolygon.star(
-            7, root.radius, root.radius / 2, 
-            new CornerRounding.CornerRounding(root.radius / 15), null, null, 
-            root.width / 2, root.height / 2
-        )
-        return new Morph.Morph(star, rectangle)
+        const shape1 = RoundedPolygon.RoundedPolygon.star(
+            7, 1, 0.5, new CornerRounding.CornerRounding(1 / 15)
+        ).normalized()
+        // const shape2 = RoundedPolygon.RoundedPolygon.fromNumVertices(
+        //     5, 1, 0, 0, new CornerRounding.CornerRounding(1 / 3)
+        // ).normalized()
+        const shape2 = MaterialShapes.getCircle()
+        return new Morph.Morph(shape1, shape2)
     }
     property real morphProgress: mouseArea.containsMouse ? 1 : 0
     Behavior on morphProgress {
@@ -52,19 +51,20 @@ Window {
             var ctx = getContext("2d")
             ctx.fillStyle = "#685496"
             ctx.clearRect(0, 0, width, height)
-            
-            // No morph available
             if (!root.morph) return
-            
-            // Get current shape cubics
             const cubics = root.morph.asCubics(root.morphProgress)
             if (cubics.length === 0) return
 
-            // Draw the shape
-            ctx.beginPath()
-            ctx.moveTo(cubics[0].anchor0X, cubics[0].anchor0Y) // Start at first anchor point
+            const size = root.radius * 2
+            const offsetX = root.width / 2 - size / 2
+            const offsetY = root.height / 2 - size / 2
 
-            // Connect all subsequent curves
+            ctx.save()
+            ctx.translate(offsetX, offsetY)
+            ctx.scale(size, size)
+
+            ctx.beginPath()
+            ctx.moveTo(cubics[0].anchor0X, cubics[0].anchor0Y)
             for (const cubic of cubics) {
                 ctx.bezierCurveTo(
                     cubic.control0X, cubic.control0Y,
@@ -72,8 +72,9 @@ Window {
                     cubic.anchor1X, cubic.anchor1Y
                 )
             }
-            
+            ctx.closePath()
             ctx.fill()
+            ctx.restore()
         }
     }
     //////////////////////////////// End juicy part ////////////////////////////////
