@@ -1,8 +1,8 @@
 import QtQuick
 import QtQuick.Window
-import "src/corner-rounding.js" as CornerRounding
-import "src/rounded-polygon.js" as RoundedPolygon
-import "src/morph.js" as Morph
+import "corner-rounding.js" as CornerRounding
+import "rounded-polygon.js" as RoundedPolygon
+import "morph.js" as Morph
 
 Window {
     id: root
