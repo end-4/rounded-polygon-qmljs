@@ -187,6 +187,18 @@ function getGhostish() {
     return _ghostish;
 }
 
+function getClover4Leaf() {
+    if (_clover4Leaf !== null) return _clover4Leaf;
+    _clover4Leaf = clover4();
+    return _clover4Leaf;
+}
+
+function getClover8Leaf() {
+    if (_clover8Leaf !== null) return _clover8Leaf;
+    _clover8Leaf = clover8();
+    return _clover8Leaf;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -342,6 +354,21 @@ function ghostish() {
         new PointNRound(new Offset.Offset(0.0, 1.14), new CornerRounding.CornerRounding(0.254, 0.106)),
         new PointNRound(new Offset.Offset(0.0, 0.0), new CornerRounding.CornerRounding(1.0)),
     ], 1).normalized();
+}
+
+function clover4() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.275, -0.099), new CornerRounding.CornerRounding(0.476)),
+        new PointNRound(new Offset.Offset(0.5, 0.074)),
+        new PointNRound(new Offset.Offset(0.725, -0.099), new CornerRounding.CornerRounding(0.476)),
+    ], 4).normalized();
+}
+
+function clover8() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, 0.036)),
+        new PointNRound(new Offset.Offset(0.758, -0.101), new CornerRounding.CornerRounding(0.209)),
+    ], 8).normalized();
 }
 
 class PointNRound {
