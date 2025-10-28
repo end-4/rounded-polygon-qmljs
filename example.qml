@@ -24,10 +24,7 @@ Window {
         const shape1 = RoundedPolygon.RoundedPolygon.star(
             7, 1, 0.5, new CornerRounding.CornerRounding(1 / 15)
         ).normalized()
-        // const shape2 = RoundedPolygon.RoundedPolygon.fromNumVertices(
-        //     5, 1, 0, 0, new CornerRounding.CornerRounding(1 / 3)
-        // ).normalized()
-        const shape2 = MaterialShapes.getSlanted()
+        const shape2 = MaterialShapes.getArch()
         return new Morph.Morph(shape1, shape2)
     }
     property real morphProgress: mouseArea.containsMouse ? 1 : 0

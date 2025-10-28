@@ -64,6 +64,12 @@ function getSlanted() {
     return _slanted;
 }
 
+function getArch() {
+    if (_arch !== null) return _arch;
+    _arch = arch();
+    return _arch;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -76,7 +82,12 @@ function slanted() {
     return customPolygon([
         new PointNRound(new Offset.Offset(0.926, 0.970), new CornerRounding.CornerRounding(0.189, 0.811)),
         new PointNRound(new Offset.Offset(-0.021, 0.967), new CornerRounding.CornerRounding(0.187, 0.057)),
-    ], 2);
+    ], 2).normalized();
+}
+
+function arch() {
+    return RoundedPolygon.RoundedPolygon.rectangle(1, 1, CornerRounding.Unrounded, [cornerRound20, cornerRound20, cornerRound100, cornerRound100])
+        .normalized();
 }
 
 class PointNRound {
