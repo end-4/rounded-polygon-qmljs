@@ -151,6 +151,36 @@ function getVerySunny() {
     return _verySunny;
 }
 
+function getCookie4Sided() {
+    if (_cookie4Sided !== null) return _cookie4Sided;
+    _cookie4Sided = cookie4();
+    return _cookie4Sided;
+}
+
+function getCookie6Sided() {
+    if (_cookie6Sided !== null) return _cookie6Sided;
+    _cookie6Sided = cookie6();
+    return _cookie6Sided;
+}
+
+function getCookie7Sided() {
+    if (_cookie7Sided !== null) return _cookie7Sided;
+    _cookie7Sided = cookie7();
+    return _cookie7Sided;
+}
+
+function getCookie9Sided() {
+    if (_cookie9Sided !== null) return _cookie9Sided;
+    _cookie9Sided = cookie9();
+    return _cookie9Sided;
+}
+
+function getCookie12Sided() {
+    if (_cookie12Sided !== null) return _cookie12Sided;
+    _cookie12Sided = cookie12();
+    return _cookie12Sided;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -262,6 +292,38 @@ function verySunny() {
         new PointNRound(new Offset.Offset(0.500, 1.080), new CornerRounding.CornerRounding(0.085)),
         new PointNRound(new Offset.Offset(0.358, 0.843), new CornerRounding.CornerRounding(0.085)),
     ], 8).normalized();
+}
+
+function cookie4() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(1.237, 1.236), new CornerRounding.CornerRounding(0.258)),
+        new PointNRound(new Offset.Offset(0.500, 0.918), new CornerRounding.CornerRounding(0.233)),
+    ], 4).normalized();
+}
+
+function cookie6() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.723, 0.884), new CornerRounding.CornerRounding(0.394)),
+        new PointNRound(new Offset.Offset(0.500, 1.099), new CornerRounding.CornerRounding(0.398)),
+    ], 6).normalized();
+}
+
+function cookie7() {
+    return RoundedPolygon.RoundedPolygon.star(7, 1, 0.75, cornerRound50)
+        .transformed((x, y) => rotateNeg90.map(new Offset.Offset(x, y)))
+        .normalized();
+}
+
+function cookie9() {
+    return RoundedPolygon.RoundedPolygon.star(9, 1, 0.8, cornerRound50)
+        .transformed((x, y) => rotateNeg90.map(new Offset.Offset(x, y)))
+        .normalized();
+}
+
+function cookie12() {
+    return RoundedPolygon.RoundedPolygon.star(
+        12, 1, 0.8, cornerRound50
+    ).normalized();
 }
 
 class PointNRound {
