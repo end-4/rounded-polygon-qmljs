@@ -70,6 +70,24 @@ function getArch() {
     return _arch;
 }
 
+function getFan() {
+    if (_fan !== null) return _fan;
+    _fan = fan();
+    return _fan;
+}
+
+function getArrow() {
+    if (_arrow !== null) return _arrow;
+    _arrow = arrow();
+    return _arrow;
+}
+
+function getSemiCircle() {
+    if (_semiCircle !== null) return _semiCircle;
+    _semiCircle = semiCircle();
+    return _semiCircle;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -88,6 +106,28 @@ function slanted() {
 function arch() {
     return RoundedPolygon.RoundedPolygon.rectangle(1, 1, CornerRounding.Unrounded, [cornerRound20, cornerRound20, cornerRound100, cornerRound100])
         .normalized();
+}
+
+function fan() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(1.004, 1.000), new CornerRounding.CornerRounding(0.148, 0.417)),
+        new PointNRound(new Offset.Offset(0.000, 1.000), new CornerRounding.CornerRounding(0.151)),
+        new PointNRound(new Offset.Offset(0.000, -0.003), new CornerRounding.CornerRounding(0.148)),
+        new PointNRound(new Offset.Offset(0.978, 0.020), new CornerRounding.CornerRounding(0.803)),
+    ], 1).normalized();
+}
+
+function arrow() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, 0.892), new CornerRounding.CornerRounding(0.313)),
+        new PointNRound(new Offset.Offset(-0.216, 1.050), new CornerRounding.CornerRounding(0.207)),
+        new PointNRound(new Offset.Offset(0.499, -0.160), new CornerRounding.CornerRounding(0.215, 1.000)),
+        new PointNRound(new Offset.Offset(1.225, 1.060), new CornerRounding.CornerRounding(0.211)),
+    ], 1).normalized();
+}
+
+function semiCircle() {
+    return RoundedPolygon.RoundedPolygon.rectangle(1.6, 1, CornerRounding.Unrounded, [cornerRound20, cornerRound20, cornerRound100, cornerRound100]).normalized();
 }
 
 class PointNRound {
