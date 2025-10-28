@@ -181,6 +181,12 @@ function getCookie12Sided() {
     return _cookie12Sided;
 }
 
+function getGhostish() {
+    if (_ghostish !== null) return _ghostish;
+    _ghostish = ghostish();
+    return _ghostish;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -324,6 +330,18 @@ function cookie12() {
     return RoundedPolygon.RoundedPolygon.star(
         12, 1, 0.8, cornerRound50
     ).normalized();
+}
+
+function ghostish() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.5, 0.0), new CornerRounding.CornerRounding(1.0)),
+        new PointNRound(new Offset.Offset(1.0, 0.0), new CornerRounding.CornerRounding(1.0)),
+        new PointNRound(new Offset.Offset(1.0, 1.14), new CornerRounding.CornerRounding(0.254, 0.106)),
+        new PointNRound(new Offset.Offset(0.575, 0.906), new CornerRounding.CornerRounding(0.253)),
+        new PointNRound(new Offset.Offset(0.425, 0.906), new CornerRounding.CornerRounding(0.253)),
+        new PointNRound(new Offset.Offset(0.0, 1.14), new CornerRounding.CornerRounding(0.254, 0.106)),
+        new PointNRound(new Offset.Offset(0.0, 0.0), new CornerRounding.CornerRounding(1.0)),
+    ], 1).normalized();
 }
 
 class PointNRound {
