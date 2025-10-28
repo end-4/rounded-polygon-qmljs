@@ -235,6 +235,36 @@ function getPuffy() {
     return _puffy;
 }
 
+function getPuffyDiamond() {
+    if (_puffyDiamond !== null) return _puffyDiamond;
+    _puffyDiamond = puffyDiamond();
+    return _puffyDiamond;
+}
+
+function getPixelCircle() {
+    if (_pixelCircle !== null) return _pixelCircle;
+    _pixelCircle = pixelCircle();
+    return _pixelCircle;
+}
+
+function getPixelTriangle() {
+    if (_pixelTriangle !== null) return _pixelTriangle;
+    _pixelTriangle = pixelTriangle();
+    return _pixelTriangle;
+}
+
+function getBun() {
+    if (_bun !== null) return _bun;
+    _bun = bun();
+    return _bun;
+}
+
+function getHeart() {
+    if (_heart !== null) return _heart;
+    _heart = heart();
+    return _heart;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -484,6 +514,100 @@ function puffy() {
         new PointNRound(new Offset.Offset(0.500, 0.947)),
     ], 2);
     return shape.transformed((x, y) => m.map(new Offset.Offset(x, y))).normalized();
+}
+
+function puffyDiamond() {
+    return customPolygon([
+        // original points
+        new PointNRound(new Offset.Offset(0.870, 0.130), new CornerRounding.CornerRounding(0.146)),
+        new PointNRound(new Offset.Offset(0.818, 0.357)),
+        new PointNRound(new Offset.Offset(1.000, 0.332), new CornerRounding.CornerRounding(0.853)),
+        // mirrored points
+        new PointNRound(new Offset.Offset(1.000, 1-0.332), new CornerRounding.CornerRounding(0.853)),
+        new PointNRound(new Offset.Offset(0.818, 1-0.357)),
+    ], 4).normalized();
+}
+
+function pixelCircle() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, 0.000)),
+        new PointNRound(new Offset.Offset(0.704, 0.000)),
+        new PointNRound(new Offset.Offset(0.704, 0.065)),
+        new PointNRound(new Offset.Offset(0.843, 0.065)),
+        new PointNRound(new Offset.Offset(0.843, 0.148)),
+        new PointNRound(new Offset.Offset(0.926, 0.148)),
+        new PointNRound(new Offset.Offset(0.926, 0.296)),
+        new PointNRound(new Offset.Offset(1.000, 0.296)),
+        // mirrored points
+        new PointNRound(new Offset.Offset(1.000, 1-0.296)),
+        new PointNRound(new Offset.Offset(0.926, 1-0.296)),
+        new PointNRound(new Offset.Offset(0.926, 1-0.148)),
+        new PointNRound(new Offset.Offset(0.843, 1-0.148)),
+        new PointNRound(new Offset.Offset(0.843, 1-0.065)),
+        new PointNRound(new Offset.Offset(0.704, 1-0.065)),
+        new PointNRound(new Offset.Offset(0.704, 1-0.000)),
+        new PointNRound(new Offset.Offset(0.500, 1-0.000)),
+    ], 2).normalized();
+}
+
+function pixelTriangle() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.110, 0.500)),
+        new PointNRound(new Offset.Offset(0.113, 0.000)),
+        new PointNRound(new Offset.Offset(0.287, 0.000)),
+        new PointNRound(new Offset.Offset(0.287, 0.087)),
+        new PointNRound(new Offset.Offset(0.421, 0.087)),
+        new PointNRound(new Offset.Offset(0.421, 0.170)),
+        new PointNRound(new Offset.Offset(0.560, 0.170)),
+        new PointNRound(new Offset.Offset(0.560, 0.265)),
+        new PointNRound(new Offset.Offset(0.674, 0.265)),
+        new PointNRound(new Offset.Offset(0.675, 0.344)),
+        new PointNRound(new Offset.Offset(0.789, 0.344)),
+        new PointNRound(new Offset.Offset(0.789, 0.439)),
+        new PointNRound(new Offset.Offset(0.888, 0.439)),
+        // mirrored points
+        new PointNRound(new Offset.Offset(0.888, 1-0.439)),
+        new PointNRound(new Offset.Offset(0.789, 1-0.439)),
+        new PointNRound(new Offset.Offset(0.789, 1-0.344)),
+        new PointNRound(new Offset.Offset(0.675, 1-0.344)),
+        new PointNRound(new Offset.Offset(0.674, 1-0.265)),
+        new PointNRound(new Offset.Offset(0.560, 1-0.265)),
+        new PointNRound(new Offset.Offset(0.560, 1-0.170)),
+        new PointNRound(new Offset.Offset(0.421, 1-0.170)),
+        new PointNRound(new Offset.Offset(0.421, 1-0.087)),
+        new PointNRound(new Offset.Offset(0.287, 1-0.087)),
+        new PointNRound(new Offset.Offset(0.287, 1-0.000)),
+        new PointNRound(new Offset.Offset(0.113, 1-0.000)),
+    ], 1).normalized();
+}
+
+function bun() {
+    return customPolygon([
+        // mirrored points
+        new PointNRound(new Offset.Offset(0.968, 1-1.000), cornerRound100),
+        new PointNRound(new Offset.Offset(0.992, 1-0.631), cornerRound100),
+        new PointNRound(new Offset.Offset(0.853, 1-0.518), cornerRound100),
+        new PointNRound(new Offset.Offset(0.796, 1-0.500)),
+        // original points
+        new PointNRound(new Offset.Offset(0.796, 0.500)),
+        new PointNRound(new Offset.Offset(0.853, 0.518), cornerRound100),
+        new PointNRound(new Offset.Offset(0.992, 0.631), cornerRound100),
+        new PointNRound(new Offset.Offset(0.968, 1.000), cornerRound100), 
+    ], 2).normalized();
+}
+
+function heart() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, 0.268), new CornerRounding.CornerRounding(0.016)),
+        new PointNRound(new Offset.Offset(0.792, -0.066), new CornerRounding.CornerRounding(0.958)),
+        new PointNRound(new Offset.Offset(1.064, 0.276), new CornerRounding.CornerRounding(1.000)),
+        new PointNRound(new Offset.Offset(0.501, 0.946), new CornerRounding.CornerRounding(0.129)),
+        // mirrored points
+        new PointNRound(new Offset.Offset(1-0.501, 0.946), new CornerRounding.CornerRounding(0.129)),
+        new PointNRound(new Offset.Offset(1-1.064, 0.276), new CornerRounding.CornerRounding(1.000)),
+        new PointNRound(new Offset.Offset(1-0.792, -0.066), new CornerRounding.CornerRounding(0.958)),
+        new PointNRound(new Offset.Offset(1-0.500, 0.268), new CornerRounding.CornerRounding(0.016)),
+    ], 1).normalized();
 }
 
 class PointNRound {

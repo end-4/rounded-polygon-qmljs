@@ -25,7 +25,7 @@ Window {
         //     7, 1, 0.5, new CornerRounding.CornerRounding(1 / 15)
         // ).normalized()
         const shape1 = MaterialShapes.getArch()
-        const shape2 = MaterialShapes.getPuffy()
+        const shape2 = MaterialShapes.getHeart()
         return new Morph.Morph(shape1, shape2)
     }
     property real morphProgress: mouseArea.containsMouse ? 1 : 0
