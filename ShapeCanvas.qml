@@ -29,6 +29,7 @@ Canvas {
     }
 
     onProgressChanged: requestPaint()
+    onColorChanged: requestPaint()
     onPaint: {
         var ctx = getContext("2d")
         ctx.fillStyle = root.color
