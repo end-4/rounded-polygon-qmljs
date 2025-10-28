@@ -145,6 +145,12 @@ function getSunny() {
     return _sunny;
 }
 
+function getVerySunny() {
+    if (_verySunny !== null) return _verySunny;
+    _verySunny = verySunny();
+    return _verySunny;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -249,6 +255,13 @@ function sunny() {
     return RoundedPolygon.RoundedPolygon.star(
         8, 1, 0.8, cornerRound15
     ).normalized();
+}
+
+function verySunny() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, 1.080), new CornerRounding.CornerRounding(0.085)),
+        new PointNRound(new Offset.Offset(0.358, 0.843), new CornerRounding.CornerRounding(0.085)),
+    ], 8).normalized();
 }
 
 class PointNRound {
