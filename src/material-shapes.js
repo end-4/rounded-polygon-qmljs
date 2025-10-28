@@ -133,6 +133,12 @@ function getPentagon() {
     return _pentagon;
 }
 
+function getGem() {
+    if (_gem !== null) return _gem;
+    _gem = gem();
+    return _gem;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -219,6 +225,17 @@ function pentagon() {
         new PointNRound(new Offset.Offset(0.828, 0.970), new CornerRounding.CornerRounding(0.169)),
         new PointNRound(new Offset.Offset(0.172, 0.970), new CornerRounding.CornerRounding(0.169)),
         new PointNRound(new Offset.Offset(-0.030, 0.365), new CornerRounding.CornerRounding(0.164)),
+    ], 1).normalized();
+}
+
+function gem() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.5, 1.023), new CornerRounding.CornerRounding(0.241, 0.778)),
+        new PointNRound(new Offset.Offset(-0.005, 0.792), new CornerRounding.CornerRounding(0.208)),
+        new PointNRound(new Offset.Offset(0.073, 0.258), new CornerRounding.CornerRounding(0.228)),
+        new PointNRound(new Offset.Offset(0.5, 0.000), new CornerRounding.CornerRounding(0.241, 0.778)),
+        new PointNRound(new Offset.Offset(0.927, 0.258), new CornerRounding.CornerRounding(0.228)),
+        new PointNRound(new Offset.Offset(1.005, 0.792), new CornerRounding.CornerRounding(0.208)),
     ], 1).normalized();
 }
 
