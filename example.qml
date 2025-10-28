@@ -1,6 +1,5 @@
 import QtQuick
 import QtQuick.Window
-import "shapes/morph.js" as Morph
 import "material-shapes.js" as MaterialShapes
 
 Window {

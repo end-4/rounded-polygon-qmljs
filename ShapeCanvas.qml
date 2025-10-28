@@ -11,7 +11,7 @@ Canvas {
     property Animation animation: NumberAnimation {
         duration: 350
         easing.type: Easing.BezierSpline
-        easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1] // Material 3 Expressive Spatial Fast
+        easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1] // Material 3 Expressive fast spatial (https://m3.material.io/styles/motion/overview/specs)
     }
     
     onRoundedPolygonChanged: {
