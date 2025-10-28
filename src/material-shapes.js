@@ -1,8 +1,10 @@
 .pragma library
 
+.import "shapes/point.js" as Point
 .import "shapes/rounded-polygon.js" as RoundedPolygon
 .import "shapes/corner-rounding.js" as CornerRounding
 .import "geometry/offset.js" as Offset
+.import "graphics/matrix.js" as Matrix
 
 var _circle = null
 var _square = null
@@ -46,6 +48,22 @@ var cornerRound30 = new CornerRounding.CornerRounding(0.3)
 var cornerRound50 = new CornerRounding.CornerRounding(0.5)
 var cornerRound100 = new CornerRounding.CornerRounding(1.0)
 
+var rotateNeg45 = function() {
+    const m = new Matrix.Matrix();
+    m.rotateZ(-45);
+    return m;
+};
+var rotateNeg90 = function() {
+    const m = new Matrix.Matrix();
+    m.rotateZ(-90);
+    return m;
+};
+var rotateNeg135 = function() {
+    const m = new Matrix.Matrix();
+    m.rotateZ(-135);
+    return m;
+};
+
 function getCircle() {
     if (_circle !== null) return _circle;
     _circle = circle();
@@ -88,6 +106,12 @@ function getSemiCircle() {
     return _semiCircle;
 }
 
+function getOval() {
+    if (_oval !== null) return _oval;
+    _oval = oval();
+    return _oval;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -105,6 +129,7 @@ function slanted() {
 
 function arch() {
     return RoundedPolygon.RoundedPolygon.rectangle(1, 1, CornerRounding.Unrounded, [cornerRound20, cornerRound20, cornerRound100, cornerRound100])
+        .transformed((x, y) => rotateNeg135().map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -128,6 +153,15 @@ function arrow() {
 
 function semiCircle() {
     return RoundedPolygon.RoundedPolygon.rectangle(1.6, 1, CornerRounding.Unrounded, [cornerRound20, cornerRound20, cornerRound100, cornerRound100]).normalized();
+}
+
+function oval() {
+    const scaleMatrix = new Matrix.Matrix();
+    scaleMatrix.scale(1, 0.64);
+    return RoundedPolygon.RoundedPolygon.circle()
+        .transformed((x, y) => scaleMatrix.map(new Offset.Offset(x, y)))
+        .transformed((x, y) => rotateNeg45().map(new Offset.Offset(x, y)))
+        .normalized();
 }
 
 class PointNRound {
