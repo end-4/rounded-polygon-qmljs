@@ -139,6 +139,12 @@ function getGem() {
     return _gem;
 }
 
+function getSunny() {
+    if (_sunny !== null) return _sunny;
+    _sunny = sunny();
+    return _sunny;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -237,6 +243,12 @@ function gem() {
         new PointNRound(new Offset.Offset(0.927, 0.258), new CornerRounding.CornerRounding(0.228)),
         new PointNRound(new Offset.Offset(1.005, 0.792), new CornerRounding.CornerRounding(0.208)),
     ], 1).normalized();
+}
+
+function sunny() {
+    return RoundedPolygon.RoundedPolygon.star(
+        8, 1, 0.8, cornerRound15
+    ).normalized();
 }
 
 class PointNRound {
