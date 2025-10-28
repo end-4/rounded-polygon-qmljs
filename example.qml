@@ -21,16 +21,17 @@ Window {
     property double radius: 50
 
     property var morph: {
-        const shape1 = RoundedPolygon.RoundedPolygon.star(
-            7, 1, 0.5, new CornerRounding.CornerRounding(1 / 15)
-        ).normalized()
-        const shape2 = MaterialShapes.getTriangle()
+        // const shape1 = RoundedPolygon.RoundedPolygon.star(
+        //     7, 1, 0.5, new CornerRounding.CornerRounding(1 / 15)
+        // ).normalized()
+        const shape1 = MaterialShapes.getArch()
+        const shape2 = MaterialShapes.getPentagon()
         return new Morph.Morph(shape1, shape2)
     }
     property real morphProgress: mouseArea.containsMouse ? 1 : 0
     Behavior on morphProgress {
         NumberAnimation {
-            duration: 350
+            duration: 500
             easing.type: Easing.BezierSpline
             easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1] // M3 Expressive fast spring curve
         }

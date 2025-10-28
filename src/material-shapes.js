@@ -115,6 +115,24 @@ function getTriangle() {
     return _triangle;
 }
 
+function getDiamond() {
+    if (_diamond !== null) return _diamond;
+    _diamond = diamond();
+    return _diamond;
+}
+
+function getClamShell() {
+    if (_clamShell !== null) return _clamShell;
+    _clamShell = clamShell();
+    return _clamShell;
+}
+
+function getPentagon() {
+    if (_pentagon !== null) return _pentagon;
+    _pentagon = pentagon();
+    return _pentagon;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -177,6 +195,31 @@ function triangle() {
     return RoundedPolygon.RoundedPolygon.fromNumVertices(3, 1, 0.5, 0.5, cornerRound20)
         .transformed((x, y) => rotateNeg90.map(new Offset.Offset(x, y)))
         .normalized();
+}
+
+function diamond() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, 1.096), new CornerRounding.CornerRounding(0.151, 0.524)),
+        new PointNRound(new Offset.Offset(0.040, 0.500), new CornerRounding.CornerRounding(0.159)),
+    ], 2).normalized();
+}
+
+function clamShell() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.171, 0.841), new CornerRounding.CornerRounding(0.159)),
+        new PointNRound(new Offset.Offset(-0.020, 0.500), new CornerRounding.CornerRounding(0.140)),
+        new PointNRound(new Offset.Offset(0.170, 0.159), new CornerRounding.CornerRounding(0.159)),
+    ], 2).normalized();
+}
+
+function pentagon() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.500, -0.009), new CornerRounding.CornerRounding(0.172)),
+        new PointNRound(new Offset.Offset(1.030, 0.365), new CornerRounding.CornerRounding(0.164)),
+        new PointNRound(new Offset.Offset(0.828, 0.970), new CornerRounding.CornerRounding(0.169)),
+        new PointNRound(new Offset.Offset(0.172, 0.970), new CornerRounding.CornerRounding(0.169)),
+        new PointNRound(new Offset.Offset(-0.030, 0.365), new CornerRounding.CornerRounding(0.164)),
+    ], 1).normalized();
 }
 
 class PointNRound {
