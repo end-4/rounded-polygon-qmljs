@@ -307,7 +307,7 @@ class RoundedPolygon {
         )
     }
 
-    static rectangle(width, height, rounding = CornerRounding.Unrounded, perVertexRounding = null, centerX, centerY) {
+    static rectangle(width, height, rounding = CornerRounding.Unrounded, perVertexRounding = null, centerX = 0, centerY = 0) {
         const left = centerX - width / 2
         const top = centerY - height / 2
         const right = centerX + width / 2

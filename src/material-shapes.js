@@ -51,6 +51,16 @@ function getCircle() {
     return _circle;
 }
 
+function getSquare() {
+    if (_square !== null) return _square;
+    _square = square();
+    return _square;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
+}
+
+function square() {
+    return RoundedPolygon.RoundedPolygon.rectangle(1, 1, cornerRound30).normalized();
 }
