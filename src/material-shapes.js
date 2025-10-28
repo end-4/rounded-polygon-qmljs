@@ -1,7 +1,8 @@
 .pragma library
 
-.import "rounded-polygon.js" as RoundedPolygon
-.import "corner-rounding.js" as CornerRounding
+.import "shapes/rounded-polygon.js" as RoundedPolygon
+.import "shapes/corner-rounding.js" as CornerRounding
+.import "geometry/offset.js" as Offset
 
 var _circle = null
 var _square = null
@@ -57,10 +58,74 @@ function getSquare() {
     return _square;
 }
 
+function getSlanted() {
+    if (_slanted !== null) return _slanted;
+    _slanted = slanted();
+    return _slanted;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
 
 function square() {
     return RoundedPolygon.RoundedPolygon.rectangle(1, 1, cornerRound30).normalized();
+}
+
+function slanted() {
+    return customPolygon([
+        new PointNRound(new Offset.Offset(0.926, 0.970), new CornerRounding.CornerRounding(0.189, 0.811)),
+        new PointNRound(new Offset.Offset(-0.021, 0.967), new CornerRounding.CornerRounding(0.187, 0.057)),
+    ], 2);
+}
+
+class PointNRound {
+    constructor(o, r = CornerRounding.Unrounded) {
+        this.o = o;
+        this.r = r;
+    }
+}
+
+function doRepeat(points, reps, center, mirroring) {
+    if (mirroring) {
+        const result = [];
+        const angles = points.map(p => p.o.minus(center).angleDegrees());
+        const distances = points.map(p => p.o.minus(center).getDistance());
+        const actualReps = reps * 2;
+        const sectionAngle = 360 / actualReps;
+        for (let it = 0; it < actualReps; it++) {
+            for (let index = 0; index < points.length; index++) {
+                const i = (it % 2 === 0) ? index : points.length - 1 - index;
+                if (i > 0 || it % 2 === 0) {
+                    const baseAngle = angles[i];
+                    const angle = it * sectionAngle + (it % 2 === 0 ? baseAngle : (2 * angles[0] - baseAngle));
+                    const dist = distances[i];
+                    const rad = angle * Math.PI / 180;
+                    const x = center.x + dist * Math.cos(rad);
+                    const y = center.y + dist * Math.sin(rad);
+                    result.push(new PointNRound(new Offset.Offset(x, y), points[i].r));
+                }
+            }
+        }
+        return result;
+    } else {
+        const np = points.length;
+        const result = [];
+        for (let i = 0; i < np * reps; i++) {
+            const point = points[i % np].o.rotateDegrees(Math.floor(i / np) * 360 / reps, center);
+            result.push(new PointNRound(point, points[i % np].r));
+        }
+        return result;
+    }
+}
+
+function customPolygon(pnr, reps, center = new Offset.Offset(0.5, 0.5), mirroring = false) {
+    const actualPoints = doRepeat(pnr, reps, center, mirroring);
+    const vertices = [];
+    for (const p of actualPoints) {
+        vertices.push(p.o.x);
+        vertices.push(p.o.y);
+    }
+    const perVertexRounding = actualPoints.map(p => p.r);
+    return RoundedPolygon.RoundedPolygon.fromVertices(vertices, CornerRounding.Unrounded, perVertexRounding, center.x, center.y);
 }

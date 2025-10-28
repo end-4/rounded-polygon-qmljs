@@ -1,9 +1,9 @@
 import QtQuick
 import QtQuick.Window
-import "src/corner-rounding.js" as CornerRounding
-import "src/rounded-polygon.js" as RoundedPolygon
+import "src/shapes/corner-rounding.js" as CornerRounding
+import "src/shapes/rounded-polygon.js" as RoundedPolygon
+import "src/shapes/morph.js" as Morph
 import "src/material-shapes.js" as MaterialShapes
-import "src/morph.js" as Morph
 
 Window {
     id: root
@@ -27,7 +27,7 @@ Window {
         // const shape2 = RoundedPolygon.RoundedPolygon.fromNumVertices(
         //     5, 1, 0, 0, new CornerRounding.CornerRounding(1 / 3)
         // ).normalized()
-        const shape2 = MaterialShapes.getSquare()
+        const shape2 = MaterialShapes.getSlanted()
         return new Morph.Morph(shape1, shape2)
     }
     property real morphProgress: mouseArea.containsMouse ? 1 : 0
