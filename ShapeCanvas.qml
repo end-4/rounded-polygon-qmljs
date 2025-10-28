@@ -1,14 +1,34 @@
 import QtQuick
 import "shapes/morph.js" as Morph
-import "material-shapes.js" as MaterialShapes
 
 Canvas {
     id: root
-    property real progress: 0
+    property double progress: 1
     property color color: "#685496"
-    property var morph: null
-    onProgressChanged: requestPaint()
+    property var prevRoundedPolygon: null
+    property var roundedPolygon: null
+    property var morph: new Morph.Morph(roundedPolygon, roundedPolygon)
+    property Animation animation: NumberAnimation {
+        duration: 350
+        easing.type: Easing.BezierSpline
+        easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1] // Material 3 Expressive Spatial Fast
+    }
     
+    onRoundedPolygonChanged: {
+        root.morph = new Morph.Morph(root.prevRoundedPolygon ?? root.roundedPolygon, root.roundedPolygon)
+        morphBehavior.enabled = false;
+        root.progress = 0
+        morphBehavior.enabled = true;
+        root.progress = 1
+        root.prevRoundedPolygon = root.roundedPolygon
+    }
+
+    Behavior on progress {
+        id: morphBehavior
+        animation: root.animation
+    }
+
+    onProgressChanged: requestPaint()
     onPaint: {
         var ctx = getContext("2d")
         ctx.fillStyle = root.color

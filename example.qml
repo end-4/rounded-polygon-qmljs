@@ -12,11 +12,11 @@ Window {
     visible: true
     onClosing: Qt.quit()
 
+    property double radius: 50
     property double padding: 50
     property double shapePadding: 12
 
     //////////////////////////////// Begin juicy part ////////////////////////////////
-    property double radius: 50
 
     property var shapeGetters: [
         MaterialShapes.getCircle,
@@ -56,48 +56,22 @@ Window {
         MaterialShapes.getHeart
     ]
     property int shapeIndex: 0
-    property int nextShapeIndex: 1
-    property var morph: new Morph.Morph(shapeGetters[shapeIndex](), shapeGetters[nextShapeIndex]())
-    property real morphProgress: 0
-    Behavior on morphProgress {
-        id: morphBehavior
-        NumberAnimation {
-            duration: 350
-            easing.type: Easing.BezierSpline
-            easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1]
-        }
-    }
-
-    // The actual shape
-    ShapeCanvas {
-        id: shapeCanvas
-        z: 2
-        anchors.fill: parent
-        progress: root.morphProgress
-        color: "#685496"
-        morph: root.morph
-        onProgressChanged: requestPaint()
-    }
     // Automatic morphing
     Timer {
         id: morphTimer
         interval: 700
         running: true
         repeat: true
-        onTriggered: {
-            root.morphProgress = 1;
-        }
+        onTriggered: root.shapeIndex++;
     }
-    onMorphProgressChanged: {
-        if (root.morphProgress === 1) {
-            // Morph animation finished, advance to next shape
-            root.shapeIndex = (root.shapeIndex + 1) % root.shapeGetters.length;
-            root.nextShapeIndex = (root.shapeIndex + 1) % root.shapeGetters.length;
-            root.morph = new Morph.Morph(root.shapeGetters[root.shapeIndex](), root.shapeGetters[root.nextShapeIndex]());
-            morphBehavior.enabled = false; // prevent shake
-            root.morphProgress = 0;
-            morphBehavior.enabled = true;
-        }
+    // The actual shape
+    ShapeCanvas {
+        id: shapeCanvas
+        z: 2
+        anchors.fill: parent
+        color: "#685496"
+        roundedPolygon: root.shapeGetters[root.shapeIndex]()
+        onProgressChanged: requestPaint()
     }
     //////////////////////////////// End juicy part ////////////////////////////////
 
@@ -121,7 +95,7 @@ Window {
             topMargin: 8
         }
         color: "#E6E1E3"
-        text: "Shape " + (root.shapeIndex+1) + " → " + (root.nextShapeIndex+1) + " / " + root.shapeGetters.length
+        text: "Shape %1/%2".arg(root.shapeIndex+1).arg(root.shapeGetters.length)
         font.pixelSize: 16
     }
 }
