@@ -48,21 +48,12 @@ var cornerRound30 = new CornerRounding.CornerRounding(0.3)
 var cornerRound50 = new CornerRounding.CornerRounding(0.5)
 var cornerRound100 = new CornerRounding.CornerRounding(1.0)
 
-var rotateNeg45 = function() {
-    const m = new Matrix.Matrix();
-    m.rotateZ(-45);
-    return m;
-};
-var rotateNeg90 = function() {
-    const m = new Matrix.Matrix();
-    m.rotateZ(-90);
-    return m;
-};
-var rotateNeg135 = function() {
-    const m = new Matrix.Matrix();
-    m.rotateZ(-135);
-    return m;
-};
+var rotateNeg45 = new Matrix.Matrix();
+rotateNeg45.rotateZ(-45);
+var rotateNeg90 = new Matrix.Matrix();
+rotateNeg90.rotateZ(-90);
+var rotateNeg135 = new Matrix.Matrix();
+rotateNeg135.rotateZ(-135);
 
 function getCircle() {
     if (_circle !== null) return _circle;
@@ -112,6 +103,18 @@ function getOval() {
     return _oval;
 }
 
+function getPill() {
+    if (_pill !== null) return _pill;
+    _pill = pill();
+    return _pill;
+}
+
+function getTriangle() {
+    if (_triangle !== null) return _triangle;
+    _triangle = triangle();
+    return _triangle;
+}
+
 function circle() {
     return RoundedPolygon.RoundedPolygon.circle(10).normalized();
 }
@@ -129,7 +132,6 @@ function slanted() {
 
 function arch() {
     return RoundedPolygon.RoundedPolygon.rectangle(1, 1, CornerRounding.Unrounded, [cornerRound20, cornerRound20, cornerRound100, cornerRound100])
-        .transformed((x, y) => rotateNeg135().map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -160,7 +162,20 @@ function oval() {
     scaleMatrix.scale(1, 0.64);
     return RoundedPolygon.RoundedPolygon.circle()
         .transformed((x, y) => scaleMatrix.map(new Offset.Offset(x, y)))
-        .transformed((x, y) => rotateNeg45().map(new Offset.Offset(x, y)))
+        .transformed((x, y) => rotateNeg45.map(new Offset.Offset(x, y)))
+        .normalized();
+}
+
+function pill() {
+    // TODO: use customPolygon version so the shape is more aligned
+    return RoundedPolygon.RoundedPolygon.rectangle(1, 0.804, cornerRound100, [cornerRound100, cornerRound100, cornerRound100, cornerRound100], 0.5, 0.5)
+        .transformed((x, y) => rotateNeg45.map(new Offset.Offset(x, y)))
+        .normalized();
+}
+
+function triangle() {
+    return RoundedPolygon.RoundedPolygon.fromNumVertices(3, 1, 0.5, 0.5, cornerRound20)
+        .transformed((x, y) => rotateNeg90.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
