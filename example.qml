@@ -20,20 +20,53 @@ Window {
     //////////////////////////////// Begin juicy part ////////////////////////////////
     property double radius: 50
 
-    property var morph: {
-        // const shape1 = RoundedPolygon.RoundedPolygon.star(
-        //     7, 1, 0.5, new CornerRounding.CornerRounding(1 / 15)
-        // ).normalized()
-        const shape1 = MaterialShapes.getArch()
-        const shape2 = MaterialShapes.getHeart()
-        return new Morph.Morph(shape1, shape2)
-    }
-    property real morphProgress: mouseArea.containsMouse ? 1 : 0
+    property var shapeGetters: [
+        MaterialShapes.getCircle,
+        MaterialShapes.getSquare,
+        MaterialShapes.getSlanted,
+        MaterialShapes.getArch,
+        MaterialShapes.getFan,
+        MaterialShapes.getArrow,
+        MaterialShapes.getSemiCircle,
+        MaterialShapes.getOval,
+        MaterialShapes.getPill,
+        MaterialShapes.getTriangle,
+        MaterialShapes.getDiamond,
+        MaterialShapes.getClamShell,
+        MaterialShapes.getPentagon,
+        MaterialShapes.getGem,
+        MaterialShapes.getSunny,
+        MaterialShapes.getVerySunny,
+        MaterialShapes.getCookie4Sided,
+        MaterialShapes.getCookie6Sided,
+        MaterialShapes.getCookie7Sided,
+        MaterialShapes.getCookie9Sided,
+        MaterialShapes.getCookie12Sided,
+        MaterialShapes.getGhostish,
+        MaterialShapes.getClover4Leaf,
+        MaterialShapes.getClover8Leaf,
+        MaterialShapes.getBurst,
+        MaterialShapes.getSoftBurst,
+        MaterialShapes.getBoom,
+        MaterialShapes.getSoftBoom,
+        MaterialShapes.getFlower,
+        MaterialShapes.getPuffy,
+        MaterialShapes.getPuffyDiamond,
+        MaterialShapes.getPixelCircle,
+        MaterialShapes.getPixelTriangle,
+        MaterialShapes.getBun,
+        MaterialShapes.getHeart
+    ]
+    property int shapeIndex: 0
+    property int nextShapeIndex: 1
+    property var morph: new Morph.Morph(shapeGetters[shapeIndex](), shapeGetters[nextShapeIndex]())
+    property real morphProgress: 0
     Behavior on morphProgress {
+        id: morphBehavior
         NumberAnimation {
-            duration: 500
+            duration: 350
             easing.type: Easing.BezierSpline
-            easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1] // M3 Expressive fast spring curve
+            easing.bezierCurve: [0.42, 1.67, 0.21, 0.90, 1, 1]
         }
     }
 
@@ -97,16 +130,30 @@ Window {
             topMargin: 8
         }
         color: "#E6E1E3"
-        text: "pls click"
+        text: "Shape " + (root.shapeIndex+1) + " → " + (root.nextShapeIndex+1) + " / " + root.shapeGetters.length
         font.pixelSize: 16
     }
 
-    // Interaction
-    MouseArea {
-        id: mouseArea
-        anchors.fill: parent
-        acceptedButtons: Qt.LeftButton
-        cursorShape: Qt.PointingHandCursor
+    // Automatic morphing
+    Timer {
+        id: morphTimer
+        interval: 700
+        running: true
+        repeat: true
+        onTriggered: {
+            root.morphProgress = 1;
+        }
+    }
+    onMorphProgressChanged: {
+        if (root.morphProgress === 1) {
+            // Morph animation finished, advance to next shape
+            root.shapeIndex = (root.shapeIndex + 1) % root.shapeGetters.length;
+            root.nextShapeIndex = (root.shapeIndex + 1) % root.shapeGetters.length;
+            root.morph = new Morph.Morph(root.shapeGetters[root.shapeIndex](), root.shapeGetters[root.nextShapeIndex]());
+            morphBehavior.enabled = false; // prevent shake
+            root.morphProgress = 0;
+            morphBehavior.enabled = true;
+        }
     }
 }
 
