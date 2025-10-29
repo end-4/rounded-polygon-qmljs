@@ -63,5 +63,19 @@ Window {
         text: "Shape %1/%2".arg(root.shapeIndex+1).arg(root.shapeGetters.length)
         font.pixelSize: 16
     }
+
+    MouseArea {
+        anchors.fill: parent
+        onClicked: {
+            morphTimer.running = !morphTimer.running
+        }
+        onWheel: {
+            if (wheel.angleDelta.y < 0) {
+                root.shapeIndex = (root.shapeIndex + 1) % root.shapeGetters.length;
+            } else {
+                root.shapeIndex = (root.shapeIndex - 1 + root.shapeGetters.length) % root.shapeGetters.length;
+            }
+        }
+    }
 }
 
