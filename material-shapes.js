@@ -73,6 +73,8 @@ rotate180.rotateZ(180);
 
 var rotate28th = new Matrix.Matrix();
 rotate28th.rotateZ(360/28);
+var rotateNeg16th = new Matrix.Matrix();
+rotateNeg16th.rotateZ(-360/16);
 
 function getCircle() {
     if (_circle !== null) return _circle;
@@ -332,16 +334,21 @@ function oval() {
     const scaleMatrix = new Matrix.Matrix();
     scaleMatrix.scale(1, 0.64);
     return RoundedPolygon.RoundedPolygon.circle()
-        .transformed((x, y) => rotateNeg135.map(new Offset.Offset(x, y)))
+        .transformed((x, y) => rotateNeg90.map(new Offset.Offset(x, y)))
         .transformed((x, y) => scaleMatrix.map(new Offset.Offset(x, y)))
         .transformed((x, y) => rotate135.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
 function pill() {
-    // TODO: use customPolygon version so the shape is more aligned
-    return RoundedPolygon.RoundedPolygon.rectangle(1, 0.804, cornerRound100, [cornerRound100, cornerRound100, cornerRound100, cornerRound100], 0.5, 0.5)
-        .transformed((x, y) => rotateNeg45.map(new Offset.Offset(x, y)))
+    return customPolygon([
+        // new PointNRound(new Offset.Offset(0.609, 0.000), new CornerRounding.CornerRounding(1.000)),
+        new PointNRound(new Offset.Offset(0.428, -0.001), new CornerRounding.CornerRounding(0.426)),
+        new PointNRound(new Offset.Offset(0.961, 0.039), new CornerRounding.CornerRounding(0.426)),
+        new PointNRound(new Offset.Offset(1.001, 0.428)),
+        new PointNRound(new Offset.Offset(1.000, 0.609), new CornerRounding.CornerRounding(1.000)),
+    ], 2)
+        .transformed((x, y) => rotate180.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -378,18 +385,18 @@ function pentagon() {
 
 function gem() {
     return customPolygon([
+        new PointNRound(new Offset.Offset(1.005, 0.792), new CornerRounding.CornerRounding(0.208)),
         new PointNRound(new Offset.Offset(0.5, 1.023), new CornerRounding.CornerRounding(0.241, 0.778)),
         new PointNRound(new Offset.Offset(-0.005, 0.792), new CornerRounding.CornerRounding(0.208)),
         new PointNRound(new Offset.Offset(0.073, 0.258), new CornerRounding.CornerRounding(0.228)),
         new PointNRound(new Offset.Offset(0.5, 0.000), new CornerRounding.CornerRounding(0.241, 0.778)),
         new PointNRound(new Offset.Offset(0.927, 0.258), new CornerRounding.CornerRounding(0.228)),
-        new PointNRound(new Offset.Offset(1.005, 0.792), new CornerRounding.CornerRounding(0.208)),
     ], 1).normalized();
 }
 
 function sunny() {
     return RoundedPolygon.RoundedPolygon.star(8, 1, 0.8, cornerRound15)
-        .transformed((x, y) => rotate90.map(new Offset.Offset(x, y)))
+        .transformed((x, y) => rotate45.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -397,7 +404,9 @@ function verySunny() {
     return customPolygon([
         new PointNRound(new Offset.Offset(0.500, 1.080), new CornerRounding.CornerRounding(0.085)),
         new PointNRound(new Offset.Offset(0.358, 0.843), new CornerRounding.CornerRounding(0.085)),
-    ], 8).normalized();
+    ], 8)
+        .transformed((x, y) => rotateNeg45.map(new Offset.Offset(x, y)))
+        .normalized();
 }
 
 function cookie4() {
@@ -433,7 +442,7 @@ function cookie9() {
 
 function cookie12() {
     return RoundedPolygon.RoundedPolygon.star(12, 1, 0.8, cornerRound50)
-        .transformed((x, y) => rotate60.map(new Offset.Offset(x, y)))
+        .transformed((x, y) => rotate30.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -451,9 +460,9 @@ function ghostish() {
 
 function clover4() {
     return customPolygon([
+        new PointNRound(new Offset.Offset(1.099, 0.725), new CornerRounding.CornerRounding(0.476)),
         new PointNRound(new Offset.Offset(0.725, 1.099), new CornerRounding.CornerRounding(0.476)),
         new PointNRound(new Offset.Offset(0.500, 0.926)),
-        new PointNRound(new Offset.Offset(0.275, 1.099), new CornerRounding.CornerRounding(0.476)),
     ], 4).normalized();
 }
 
@@ -469,6 +478,7 @@ function burst() {
         new PointNRound(new Offset.Offset(0.592, 0.842), new CornerRounding.CornerRounding(0.006)),
         new PointNRound(new Offset.Offset(0.500, 1.006), new CornerRounding.CornerRounding(0.006)),
     ], 12)
+        .transformed((x, y) => rotateNeg30.map(new Offset.Offset(x, y)))
         .transformed((x, y) => rotateNeg30.map(new Offset.Offset(x, y)))
         .normalized();
 }
@@ -504,6 +514,7 @@ function softBoom() {
         new PointNRound(new Offset.Offset(0.733, 0.546)),
     ], 16)
         .transformed((x, y) => rotate45.map(new Offset.Offset(x, y)))
+        .transformed((x, y) => rotateNeg16th.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -569,25 +580,22 @@ function puffyDiamond() {
 
 function pixelCircle() {
     return customPolygon([
-        new PointNRound(new Offset.Offset(0.500, 0.000)),
-        new PointNRound(new Offset.Offset(0.704, 0.000)),
-        new PointNRound(new Offset.Offset(0.704, 0.065)),
-        new PointNRound(new Offset.Offset(0.843, 0.065)),
-        new PointNRound(new Offset.Offset(0.843, 0.148)),
-        new PointNRound(new Offset.Offset(0.926, 0.148)),
-        new PointNRound(new Offset.Offset(0.926, 0.296)),
-        new PointNRound(new Offset.Offset(1.000, 0.296)),
-        // mirrored points
-        new PointNRound(new Offset.Offset(1.000, 1-0.296)),
-        new PointNRound(new Offset.Offset(0.926, 1-0.296)),
-        new PointNRound(new Offset.Offset(0.926, 1-0.148)),
-        new PointNRound(new Offset.Offset(0.843, 1-0.148)),
-        new PointNRound(new Offset.Offset(0.843, 1-0.065)),
-        new PointNRound(new Offset.Offset(0.704, 1-0.065)),
-        new PointNRound(new Offset.Offset(0.704, 1-0.000)),
-        new PointNRound(new Offset.Offset(0.500, 1-0.000)),
+        new PointNRound(new Offset.Offset(1.000, 0.704)),
+        new PointNRound(new Offset.Offset(0.926, 0.704)),
+        new PointNRound(new Offset.Offset(0.926, 0.852)),
+        new PointNRound(new Offset.Offset(0.843, 0.852)),
+        new PointNRound(new Offset.Offset(0.843, 0.935)),
+        new PointNRound(new Offset.Offset(0.704, 0.935)),
+        new PointNRound(new Offset.Offset(0.704, 1.000)),
+        new PointNRound(new Offset.Offset(0.500, 1.000)),
+        new PointNRound(new Offset.Offset(1-0.704, 1.000)),
+        new PointNRound(new Offset.Offset(1-0.704, 0.935)),
+        new PointNRound(new Offset.Offset(1-0.843, 0.935)),
+        new PointNRound(new Offset.Offset(1-0.843, 0.852)),
+        new PointNRound(new Offset.Offset(1-0.926, 0.852)),
+        new PointNRound(new Offset.Offset(1-0.926, 0.704)),
+        new PointNRound(new Offset.Offset(1-1.000, 0.704)),
     ], 2)
-        .transformed((x, y) => rotate90.map(new Offset.Offset(x, y)))
         .normalized();
 }
 
@@ -631,24 +639,24 @@ function bun() {
         new PointNRound(new Offset.Offset(0.992, 0.631), cornerRound100),
         new PointNRound(new Offset.Offset(0.968, 1.000), cornerRound100), 
         // mirrored points
-        new PointNRound(new Offset.Offset(1-0.968, 1-0.000), cornerRound100),
-        new PointNRound(new Offset.Offset(1-0.992, 1-0.369), cornerRound100),
-        new PointNRound(new Offset.Offset(1-0.853, 1-0.482), cornerRound100),
-        new PointNRound(new Offset.Offset(1-0.796, 1-0.500)),
-    ], 2)
-        .normalized();
+        new PointNRound(new Offset.Offset(0.032, 1-0.000), cornerRound100),
+        new PointNRound(new Offset.Offset(0.008, 1-0.369), cornerRound100),
+        new PointNRound(new Offset.Offset(0.147, 1-0.482), cornerRound100),
+        new PointNRound(new Offset.Offset(0.204, 1-0.500)),
+    ], 2).normalized();
 }
 
 function heart() {
     return customPolygon([
+        new PointNRound(new Offset.Offset(0.782, 0.611)),
         new PointNRound(new Offset.Offset(0.499, 0.946), new CornerRounding.CornerRounding(0.000)),
+        new PointNRound(new Offset.Offset(0.2175, 0.611)),
         new PointNRound(new Offset.Offset(-0.064, 0.276), new CornerRounding.CornerRounding(1.000)),
         new PointNRound(new Offset.Offset(0.208, -0.066), new CornerRounding.CornerRounding(0.958)),
         new PointNRound(new Offset.Offset(0.500, 0.268), new CornerRounding.CornerRounding(0.016)),
         new PointNRound(new Offset.Offset(0.792, -0.066), new CornerRounding.CornerRounding(0.958)),
         new PointNRound(new Offset.Offset(1.064, 0.276), new CornerRounding.CornerRounding(1.000)),
     ], 1)
-        
         .normalized();
 }
 

@@ -69,7 +69,7 @@ Window {
         onClicked: {
             morphTimer.running = !morphTimer.running
         }
-        onWheel: {
+        onWheel: (wheel) => {
             if (wheel.angleDelta.y < 0) {
                 root.shapeIndex = (root.shapeIndex + 1) % root.shapeGetters.length;
             } else {
