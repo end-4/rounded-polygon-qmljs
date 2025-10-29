@@ -31,7 +31,9 @@ Window {
     ShapeCanvas {
         id: shapeCanvas
         z: 2
-        anchors.fill: parent
+        anchors.centerIn: parent
+        implicitWidth: root.radius * 2
+        implicitHeight: root.radius * 2
         color: "#685496"
         roundedPolygon: root.shapeGetters[root.shapeIndex]()
         onProgressChanged: requestPaint()

@@ -38,7 +38,7 @@ Canvas {
         const cubics = root.morph.asCubics(root.progress)
         if (cubics.length === 0) return
 
-        const size = Math.min(root.width, root.height) / 2
+        const size = Math.min(root.width, root.height)
         const offsetX = root.width / 2 - size / 2
         const offsetY = root.height / 2 - size / 2
 
