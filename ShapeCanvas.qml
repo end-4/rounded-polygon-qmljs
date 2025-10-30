@@ -3,10 +3,18 @@ import "shapes/morph.js" as Morph
 
 Canvas {
     id: root
-    property double progress: 1
     property color color: "#685496"
-    property var prevRoundedPolygon: null
     property var roundedPolygon: null
+    property bool polygonIsNormalized: true
+
+    // Internals: size
+    property var bounds: roundedPolygon.calculateBounds()
+    implicitWidth: bounds[2] - bounds[0]
+    implicitHeight: bounds[3] - bounds[1]
+
+    // Internals: anim
+    property var prevRoundedPolygon: null
+    property double progress: 1
     property var morph: new Morph.Morph(roundedPolygon, roundedPolygon)
     property Animation animation: NumberAnimation {
         duration: 350
@@ -15,6 +23,7 @@ Canvas {
     }
     
     onRoundedPolygonChanged: {
+        delete root.morph
         root.morph = new Morph.Morph(root.prevRoundedPolygon ?? root.roundedPolygon, root.roundedPolygon)
         morphBehavior.enabled = false;
         root.progress = 0
@@ -44,7 +53,7 @@ Canvas {
 
         ctx.save()
         ctx.translate(offsetX, offsetY)
-        ctx.scale(size, size)
+        if (root.polygonIsNormalized) ctx.scale(size, size)
 
         ctx.beginPath()
         ctx.moveTo(cubics[0].anchor0X, cubics[0].anchor0Y)
