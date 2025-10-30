@@ -11,3 +11,7 @@ qs -p example.qml
 ```
 
 https://github.com/user-attachments/assets/142cdd86-2a30-4c77-a9ce-e234b6d0d77e
+
+### Usage
+
+You can add this repo as a submodule to yours. I haven't figured out how to package this (and make it generally available with non-Quickshell QML) yet, and stability is not guaranteed.
