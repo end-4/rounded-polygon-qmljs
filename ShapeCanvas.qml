@@ -48,11 +48,8 @@ Canvas {
         if (cubics.length === 0) return
 
         const size = Math.min(root.width, root.height)
-        const offsetX = root.width / 2 - size / 2
-        const offsetY = root.height / 2 - size / 2
 
         ctx.save()
-        ctx.translate(offsetX, offsetY)
         if (root.polygonIsNormalized) ctx.scale(size, size)
 
         ctx.beginPath()
