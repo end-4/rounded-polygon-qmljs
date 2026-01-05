@@ -85,9 +85,7 @@ Canvas {
                 points.push({ x: c.anchor1X, y: c.anchor1Y })
             }
 
-            let radius = 3
-            if (root.polygonIsNormalized)
-                radius = 3 / size
+            let radius = 2
 
             ctx.fillStyle = "red"
             for (const p of points) {
